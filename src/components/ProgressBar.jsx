@@ -18,6 +18,15 @@ const ProgressBar = props => {
     //     }
     // },[active, props.id])
 
+    function convert(){
+        if (currentPos <= 10){
+            return `0:0${Math.floor(currentPos)}`
+        }
+        else if (currentPos >= 10){
+            return `0:${Math.floor(currentPos)}`
+        }
+    }
+
     return (
         
 
@@ -42,7 +51,7 @@ const ProgressBar = props => {
                 {pauseButton}
             </div>
 
-            <p className='position'>{currentPos}</p>
+            <p className='position'>{convert()}</p>
 
         </ProgressBarContainer>
 
