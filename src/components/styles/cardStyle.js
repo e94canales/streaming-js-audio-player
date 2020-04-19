@@ -16,6 +16,11 @@ const CardStyle = styled.div`
     .cardInfoContainer{
         color: white;
         padding: 5%;
+
+        @media screen and (max-width: 500px){
+                padding: 5% 0;
+                
+            }
         
         
         
@@ -23,7 +28,7 @@ const CardStyle = styled.div`
 
             @media screen and (max-width: 500px){
                 font-size: 1rem;;
-                
+                padding-bottom: 3%;
             }
         }
         h4{
