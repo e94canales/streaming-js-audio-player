@@ -11,6 +11,7 @@ const ProgressBar = props => {
     const [currentPos, setCurrentPos ] = useState(0)
     const [ progressBarWidth, setProgressBarWidth ] = useState(0)
     const [duration, setDuration ] = useState(0)
+    const [isActive, setIsActive ] = useState(false)
   
 
 
@@ -24,9 +25,22 @@ const ProgressBar = props => {
         }
         return `${Math.round(currentPos / 60)}:${Math.floor((currentPos % 60 / 60 * 100))}` // minutes + seconds 00:00
     }
+    function convertTotalDuration(){
+        if (isActive === true){
+            return `${convert()} / ${Math.floor(duration / 60)}:${Math.round((duration % 60))}`
+        }
+        else if (isActive === false){
+            return
+        }
+    }
     useEffect(() => {
         if (currentPos > 0){
             setProgressBarWidth(100 / duration * currentPos)
+        }
+        if (progressBarWidth === 100){
+            setCurrentPos(0)
+            setProgressBarWidth(0)
+            setIsActive(false)
         }
     }, [currentPos, progressBarWidth, duration])
 
@@ -44,10 +58,14 @@ const ProgressBar = props => {
             </div>
             <div className='infoControls'>
 
-                <div className='position'>{convert()}</div> {/*timer 00:00*/}
+                <div className='position'>{convertTotalDuration()}</div> {/*timer 00:00*/}
 
                 <span className="control" onClick={() => {
-                    document.querySelectorAll('audio').forEach(e => {e.pause()}) // stop all other active instances
+                    document.querySelectorAll('audio').forEach(e => { // stop all other active instances
+                        e.pause() 
+                        setIsActive(false)
+                    }) 
+                    setIsActive(true)
                     document.getElementById(`${props.id}`).play() // play button
                     document.getElementById(`${props.id}`).addEventListener('timeupdate', e => { // sets REAL-TIME progress
                         setCurrentPos(e.target.currentTime)
