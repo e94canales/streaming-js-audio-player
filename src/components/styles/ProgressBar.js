@@ -20,6 +20,13 @@ const ProgressBarContainer = styled.div `
             .control {
             color: white;
             padding: 0 1%;
+
+            @media screen and (max-width: 500px){
+                font-size: 1rem;
+                margin: 0 3%;
+                padding: 3%;
+                
+            }
             
                 &:hover {
                     color: red;
@@ -30,6 +37,10 @@ const ProgressBarContainer = styled.div `
                 position: absolute;
                 color: white;
                 float: left;
+
+                @media screen and (max-width: 500px){
+                font-size: .7rem;
+                }
             }
 
         }

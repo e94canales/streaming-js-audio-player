@@ -23,6 +23,12 @@ body {
   filter: drop-shadow(0 4px 5px rgb(58, 58, 58));
   
 }
+@media screen and (max-width: 500px){
+  .card {
+    width: 80%;
+    margin: 5%;
+  }
+  }
 .buttonContainer {
     width: 100%;
     display: flex;

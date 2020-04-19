@@ -21,9 +21,18 @@ const CardStyle = styled.div`
         
         h3{
 
+            @media screen and (max-width: 500px){
+                font-size: 1rem;;
+                
+            }
         }
         h4{
             color: grey;
+
+            @media screen and (max-width: 500px){
+                font-size: .8rem;;
+                
+            }
         }
     }
     
