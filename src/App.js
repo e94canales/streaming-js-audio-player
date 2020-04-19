@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './appStyles.css';
 import axios from 'axios';
 import MusicCard from '../src/components/MusicCard';
 import ProgressBar from '../src/components/ProgressBar';
@@ -30,8 +30,8 @@ function App() {
         songInfo.slice(0,9).map((info) => {
 
           return (
-            <div key={info.id}>
-              <MusicCard imgSrc={info.album.cover} title={info.title} artist={info.artist.name}/>
+            <div className='card' key={info.id}>
+              <MusicCard imgSrc={info.album.cover_xl} title={info.title} artist={info.artist.name}/>
               <ProgressBar id={info.id} preview={info.preview}/>
               <audio id={info.id} src={info.preview}></audio> {/* audio source */}
             </div>

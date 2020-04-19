@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProgressBarContainer from '../components/styles/ProgressBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons'
@@ -8,52 +8,63 @@ const pauseButton = <FontAwesomeIcon icon={faPause}/>
 
 const ProgressBar = props => {
 
-    const [currentPos, setCurrentPos] = useState(0)
-    // const [active , setActive] = useState(false)
+    const [currentPos, setCurrentPos ] = useState(0)
+    const [ progressBarWidth, setProgressBarWidth ] = useState(0)
+    const [duration, setDuration ] = useState(0)
+  
 
-    // useEffect(() => {
-    //     if (active){
-    //         console.log(document.getElementById(`${props.id}`).currentTime)
-
-    //     }
-    // },[active, props.id])
 
     function convert(){
-        if (currentPos <= 10){
-            return `0:0${Math.floor(currentPos)}`
+        if (Math.round(currentPos) <= 9){ // 1-9 seconds
+            return `0:0${Math.round(currentPos)}`
         }
-        else if (currentPos >= 10){
-            return `0:${Math.floor(currentPos)}`
+        
+        if (Math.round(currentPos <= 59)){ // double digit seconds
+            return `0:${Math.round(currentPos)}`
         }
+        return `${Math.round(currentPos / 60)}:${Math.floor((currentPos % 60 / 60 * 100))}` // minutes + seconds 00:00
     }
+    useEffect(() => {
+        if (currentPos > 0){
+            setProgressBarWidth(100 / duration * currentPos)
+        }
+    }, [currentPos, progressBarWidth, duration])
+
+    const PBWidth = {
+        width: `${progressBarWidth}%`
+    }
+    
 
     return (
         
 
         <ProgressBarContainer>
             <div className="player">
-                <div className="progress"></div>
+                <div className="progress" style={PBWidth} />
             </div>
+            <div className='infoControls'>
 
-            <div onClick={() => {
-                document.querySelectorAll('audio').forEach(e => {e.pause()}) // stop all other active instances
-                document.getElementById(`${props.id}`).play() // play button
-                // setActive(true)
-                document.getElementById(`${props.id}`).addEventListener('timeupdate', e => {
-                    setCurrentPos(e.target.currentTime)
-                })
-            }} className="play">{playButton}</div>
+                <div className='position'>{convert()}</div> {/*timer 00:00*/}
+
+                <span className="control" onClick={() => {
+                    document.querySelectorAll('audio').forEach(e => {e.pause()}) // stop all other active instances
+                    document.getElementById(`${props.id}`).play() // play button
+                    document.getElementById(`${props.id}`).addEventListener('timeupdate', e => { // sets REAL-TIME progress
+                        setCurrentPos(e.target.currentTime)
+                    })
+                    setDuration(document.getElementById(`${props.id}`).duration) // sets total duration
+                }}>{playButton}</span>
 
 
-            <div className='pause' onClick={() => {
-                document.getElementById(`${props.id}`).pause() //pause button
-            }}>
-                {pauseButton}
+                <span className='control' onClick={() => {
+                    document.getElementById(`${props.id}`).pause() //pause button
+                }}>{pauseButton}</span>
             </div>
+            
 
-            <p className='position'>{convert()}</p>
+            
 
-        </ProgressBarContainer>
+        </ProgressBarContainer >
 
 
     )

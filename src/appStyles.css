@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+}
+
+body {
+  background-color: rgb(209, 209, 209);
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  text-align: center;
+  width: 25%;
+  margin: 2%;
+  background-color: rgb(85, 37, 37);
+  filter: drop-shadow(0 4px 5px rgb(58, 58, 58));
+  
+}
