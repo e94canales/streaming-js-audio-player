@@ -7,6 +7,9 @@ import ProgressBar from '../src/components/ProgressBar';
 function App() {
 
   const [songInfo, setSongInfo] = useState([])
+  const [ page , setPage ] = useState(1)
+  const [ beginSlice, setBeginSlice ] = useState(0)
+  const [ endSlice, setEndSlice ] = useState(9)
 
 
 
@@ -22,12 +25,32 @@ function App() {
       })
   }, [])
 
+  useEffect(() => {
+    if (page <= 0){
+      setPage(1)      
+    }
+    setBeginSlice((page * 9) - 9)
+    setEndSlice(page * 9) 
+  }, [page])
+
+
+
   return (
     <div className="App">
+      <div className='buttonContainer'>
 
-
+      <button onClick={() => {
+            
+            setPage(page - 1)
+          }}>prev</button>
+        
+        <button onClick={() => {
+            setPage(page + 1)
+          }}>next</button>
+      </div>
+        
       {
-        songInfo.slice(0,9).map((info) => {
+        songInfo.slice(beginSlice, endSlice).map((info) => {
 
           return (
             <div className='card' key={info.id}>
